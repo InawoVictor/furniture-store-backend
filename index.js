@@ -2,10 +2,11 @@ const express = require('express')
 const dotenv = require("dotenv");
 const mongoose = require("mongoose")
 const app = express()
+const productRouter = require("./routes/products")
 
 dotenv.config()
 
-const port = 3000 || process.env.PORT
+const port = process.env.PORT || 3000
 
 const connectDB = async () => {
     try {
@@ -17,6 +18,9 @@ const connectDB = async () => {
     }
 }
 
+app.use(express.json({limit: '10mb'}));
+app.use(express.urlencoded({limit: '10mb', extended: true}));
+app.use('/api/products', productRouter)
 
 const startServer = async () => {
     try {
