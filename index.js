@@ -2,6 +2,8 @@ const express = require('express')
 const dotenv = require("dotenv");
 const mongoose = require("mongoose")
 const app = express()
+const cors = require('cors')
+
 const productRouter = require("./routes/products")
 
 dotenv.config()
@@ -18,6 +20,7 @@ const connectDB = async () => {
     }
 }
 
+app.use(cors())
 app.use(express.json({limit: '10mb'}));
 app.use(express.urlencoded({limit: '10mb', extended: true}));
 app.use('/api/products', productRouter)
